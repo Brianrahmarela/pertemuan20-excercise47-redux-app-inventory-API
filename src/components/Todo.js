@@ -6,7 +6,6 @@ import {Button, Form} from 'react-bootstrap';
 function Todo(props) {
   // console.log(props);
   let [newTodos, setNewTodos] = useState("")
-  newTodos = "";
 
   function handleChange (e){
     console.log(e.target.value)
