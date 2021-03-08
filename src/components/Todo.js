@@ -4,12 +4,18 @@ import {addTodos} from '../redux/actions/todos.actions'
 import {Button, Form} from 'react-bootstrap';
 
 function Todo(props) {
-  console.log(props);
-  const [valInpt, setValInpt] = useState("")
+  // console.log(props);
+  let [newTodos, setNewTodos] = useState("")
+  newTodos = "";
 
   function handleChange (e){
-      setValInpt (e.target.value)
-  }
+    console.log(e.target.value)
+    setNewTodos (e.target.value)
+    // setnewTodos(newTodos.newData.todo: "")
+    }
+    // setValInpt("")
+    // console.log(valInpt);
+    // handleChange.value = "";
   
   //MODAL
   // const [dataModal, setDataModal] = useState([]);
@@ -46,7 +52,7 @@ function Todo(props) {
         <Form >
             <Form.Group>
               <Form.Control type="text" placeholder="add new item" onChange={handleChange} style={{width: '400px', margin: '20px 0px 10px 0px'}} className="mx-auto"/>
-              <Button variant="primary" onClick={() => props.addTodos(valInpt)}>Add Data</Button> 
+              <Button variant="primary" onClick={() => props.addTodos(newTodos)}>Add Data</Button> 
             </Form.Group>
         </Form>
         <div className="mx-auto" style={{backgroundColor: '#F8F8F8',width: '300px',borderRadius: '15px',padding: '20px',boxShadow: '0 1px 1px rgba(0, 0, 0, 0.11),0 2px 2px rgba(0,0,0,0.12),0 4px 4px rgba(0,0,0,0.12)'}}>
@@ -97,12 +103,12 @@ const mapStateToProps = (props) => {
   
 }
 
-const mapDispatchToState = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
   return{
-    addTodos: (valInpt)=> {
-      dispatch(addTodos(valInpt));
+    addTodos: (newTodos)=> {
+      dispatch(addTodos(newTodos));
     },
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToState)(Todo);
+export default connect(mapStateToProps, mapDispatchToProps)(Todo);

@@ -1,8 +1,9 @@
 export const ADDTODOS = 'ADDTODOS';
 
-export const addTodos = (data) => {
+export const addTodos = (newData) => {
+  
   return{
     type: ADDTODOS,
-    data: {id: 1, todo : data}
+    newData: {id: 1, todo : newData}
   }
 }

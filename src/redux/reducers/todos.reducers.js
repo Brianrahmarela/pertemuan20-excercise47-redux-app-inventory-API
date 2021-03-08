@@ -15,7 +15,7 @@ const todo = (state = initialState, action) => {
   console.log("action", action);
   switch (action.type){
     case ADDTODOS:
-      console.log("test disini " , initialState.length-1 )
+      console.log(initialState.length-1 )
       action.data.id = state[state.length-1].id + 1
       return [
         ...state,
