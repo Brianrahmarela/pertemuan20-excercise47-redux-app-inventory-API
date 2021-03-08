@@ -16,10 +16,10 @@ const todo = (state = initialState, action) => {
   switch (action.type){
     case ADDTODOS:
       console.log(initialState.length-1 )
-      action.data.id = state[state.length-1].id + 1
+      action.newData.id = state[state.length-1].id + 1
       return [
         ...state,
-        action.data        
+        action.newData        
         // {
         //     id: state[state.length-1].id + 1,
         //     todo: action.newTodo
