@@ -1,10 +1,12 @@
 import './App.css';
-import Todo from './components/Todo'
+// import Todo from './components/Todo'
+import ListTodo from './page/ListTodo'
 
 function App() {
   return (
     <div className="App">
-      <Todo/>
+      {/* <Todo/> */}
+      <ListTodo/>
     </div>
   );
 }
