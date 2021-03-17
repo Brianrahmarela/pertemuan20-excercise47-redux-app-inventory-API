@@ -12,7 +12,7 @@ export const postTodoRequest = () => {
 export const postTodoSuccess = (result) => {
   return{
     type: POST_TODO_SUCCESS,
-    result
+    result,
   }
 }
 export const postTodoError = (error) => {
@@ -22,7 +22,7 @@ export const postTodoError = (error) => {
   }
 }
 
-export const postTodo = () => {
+export const postTodo = (newTodo) => {
   return function (dispatch){
     dispatch(postTodoRequest())
     axios
