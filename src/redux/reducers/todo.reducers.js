@@ -16,6 +16,12 @@ import {
   DELETE_TODO_FAILED
 } from "../actions/deletetodo.action";
 
+import {
+  PUT_TODO_REQUEST, 
+  PUT_TODO_SUCCESS,
+  PUT_TODO_FAILED
+} from "../actions/puttodo.action";
+
 const initialState = {
   data:[],
   error: null,
@@ -94,6 +100,36 @@ const getTodo = (state = initialState, action) => {
             error: action.error,
             isLoading: false,
         };
+
+    //UPDATE CASE
+    case PUT_TODO_REQUEST:
+            return {
+                ...state,
+                isLoading: true,
+            };
+        
+    case PUT_TODO_SUCCESS:
+        let updatedTodoList = state.data.map(item => {
+            if(item.id === action.result.id){
+                item.todo = action.result.todo
+            }
+            return item;
+        })
+
+        return {
+            ...state,
+            data: [...updatedTodoList],
+            isLoading: false,
+        };
+
+    case PUT_TODO_FAILED:
+        console.log(action.error);
+        return {
+            ...state,
+            error: action.error,
+            isLoading: false,
+        };
+
     default:
       return state;
   }

@@ -3,9 +3,10 @@ import {useEffect} from 'react';
 import {getTodo} from '../redux/actions/gettodo.action';
 import {postTodo} from '../redux/actions/posttodo.action'
 import {deleteTodo} from '../redux/actions/deletetodo.action'
+import {putTodo} from '../redux/actions/puttodo.action'
 import {Spinner} from 'react-bootstrap'
-import {Button, Form} from 'react-bootstrap';
-// import {useState} from 'react';
+import {Button, Form, Modal} from 'react-bootstrap';
+import {useState} from 'react';
 
 function ListTodo() {
 
@@ -18,19 +19,40 @@ function ListTodo() {
    dispatch((getTodo()));
   }, [dispatch])
 
-  // const [newTodos, setNewTodos] = useState()
-  // function handleChange (e){
-  //   setNewTodos (e.target.value)
-  // }
 
   let addTodoHandle = (e) => {
     e.preventDefault();
     dispatch(postTodo(e.target.todoItem.value))
     e.target.todoItem.value = "";
   }
+
+  //MODAL
+  const [dataModal, setDataModal] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [todoId, setTodoId] = useState("");
+
+  const handleShow = (id) => {
+    setTodoId(id)
+    setShowModal(true)
+  
+  };
+  const handleClose = () => setShowModal(false);
+
+  const handleCloseSave = (e) => {
+    setShowModal(false);
+    console.log(ListTodo);
+    dispatch(putTodo(todoId,dataModal))
+  }
+
+  const handleChangeModal = (e) => {
+    setDataModal(e.target.value);
+  }
+
+
+  console.log(dataModal);
+
   return (
     <div>
-      {/* <h1>List todo</h1> */}
       <h3 style={{marginTop: '50px'}}>Todo App from API:</h3>
         <Form onSubmit={addTodoHandle}>
             <Form.Group >
@@ -38,19 +60,46 @@ function ListTodo() {
               <Button variant="primary" type="submit">Add Data</Button> 
             </Form.Group>
         </Form>
+        <br></br>
+        <h3>List Data:</h3>
+
         <div className="mx-auto" style={{backgroundColor: '#F8F8F8',width: '300px',borderRadius: '15px',padding: '20px',boxShadow: '0 1px 1px rgba(0, 0, 0, 0.11),0 2px 2px rgba(0,0,0,0.12),0 4px 4px rgba(0,0,0,0.12)'}}>
 
-          <h1>List Data:</h1>
+          {/* <h3>List Data:</h3> */}
           {ListTodo === undefined ? (
               <Spinner animation="border" />
             ) : (
               ListTodo.map((item, index)=> (
                 <div key={index}>
-                  <h5 style={{color:'#047bfe', paddingBottom: '5px', marginBottom: '10px'}} key={index} id={item.id}>{item.todo}<br></br><Button variant="danger" type="submit" style={{marginTop: '7px'}} onClick={()=> dispatch((deleteTodo(item.id)))}>Delete</Button></h5>
+                  <h5 style={{color:'#047bfe', paddingBottom: '5px', marginBottom: '10px'}} key={index} id={item.id}>{item.todo}<br></br>
+                  <Button variant="danger" type="submit" style={{marginTop: '7px'}} onClick={()=> dispatch((deleteTodo(item.id)))}>Delete</Button>
+                  {/* <Button variant="success" type="submit" style={{marginTop: '7px'}} onClick={()=> dispatch((putTodo(item.id)))}>Edit</Button></h5> */}
+                  <Button variant="success" type="submit" style={{marginTop: '7px'}} onClick={() => handleShow(item.id)}>Edit</Button></h5>
                 </div>
               ))
-            )}
+              )}
         </div>
+
+
+        <Modal show={showModal} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Edit Item: </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form.Group>
+            <Form.Control size="lg" type="text" placeholder="update your item" onChange={handleChangeModal}/>
+            <br />
+          </Form.Group>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          <Button variant="primary" onClick={handleCloseSave}>
+            Save Changes
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
     </div>
   );
